@@ -1,0 +1,101 @@
+<template>
+    <ul if:true={isFirst}>
+        <li><a href={role.url} target="_blank"><span>{role.name}</span></a>
+            <div>
+                <lightning-button-icon data-current-role ={role.roleId} size="x-small" icon-name="utility:add"  variant="brand" alternative-text="Add Child" onclick={openNewRoleModal}></lightning-button-icon>
+                <lightning-button-icon class="redIcon" if:false={role.childRoles} data-current-role ={role.roleId} size="small" icon-name="utility:delete"  variant="error" alternative-text="Delete Role" onclick={openDeleteModal}></lightning-button-icon>
+            </div>
+            <template if:true ={role.childRoles}>
+                <ul>
+                    <template for:each={role.childRoles} for:item="child">
+                        <li key={child.roleId}><a href={child.url} target="_blank"><span>{child.name}</span></a>
+                            <div>
+                                <lightning-button-icon data-current-role ={child.roleId} size="x-small" icon-name="utility:add"  variant="brand" alternative-text="Add Child" onclick={openNewRoleModal}></lightning-button-icon>
+                                <lightning-button-icon class="redIcon" if:false={child.childRoles} data-current-role ={child.roleId} size="small" icon-name="utility:delete"  variant="error" alternative-text="Delete Role" onclick={openDeleteModal}></lightning-button-icon>
+                            </div>
+                            <c-print-roles-w-ith-subordinate root-role ={rootRole} if:true={child.childRoles} role={child}></c-print-roles-w-ith-subordinate>
+                        </li>
+                    </template>
+                </ul>                
+            </template>
+        </li>
+    </ul>
+    <ul if:false={isFirst}>
+        <template for:each={role.childRoles} for:item="child">
+            <li key={child.roleId}><a href={child.url} target="_blank"><span>{child.name}</span></a>
+                <div>
+                    <lightning-button-icon data-current-role ={child.roleId} size="x-small" icon-name="utility:add"  variant="brand" alternative-text="Add Child" onclick={openNewRoleModal}></lightning-button-icon>
+                    <lightning-button-icon class="redIcon" if:false={child.childRoles} data-current-role ={child.roleId} size="small" icon-name="utility:delete"  variant="error" alternative-text="Delete Role" onclick={openDeleteModal}></lightning-button-icon>
+                </div>
+                <c-print-roles-w-ith-subordinate root-role ={rootRole} if:true={child.childRoles} role={child}></c-print-roles-w-ith-subordinate>
+            </li>
+        </template>
+    </ul>
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create New Child User Role</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item padding="around-small">
+                            <lightning-input class="newRoleFields slds-align_absolute-center" read-only required value={selectedRole.name} label="Parent Role"></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small">
+                            <lightning-input class="newRoleFields" required label="Developer Name" data-name="devNameField" pattern="(^[a-zA-Z])([a-zA-Z0-9_]*)" 
+                            message-when-pattern-mismatch = "No special characters allowed. Only alpha numeric characters allowed."></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small">
+                            <lightning-input class="newRoleFields" data-name="nameField" required label="Name"></lightning-input>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={createNewRole} title="Create">Create</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={isDeleteModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeDeleteModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Confirm User Role Deletion</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <p> Are you sure you want to delete the selected role?</p>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand" onclick={deleteSelectedRole} title="Yes">Yes</button>
+                    <button class="slds-button slds-button_neutral" onclick={closeDeleteModal} title="No">No</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

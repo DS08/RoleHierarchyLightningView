@@ -1,0 +1,14 @@
+<template>
+    <div if:true={isLoading} class="slds-is-relative">
+        <lightning-spinner
+            alternative-text="Loading..."  variant="brand" size="large" class="slds-hide">
+        </lightning-spinner>
+    </div>
+    <div if:false={isLoading} class="container">
+        <div class="row">
+            <div class="tree">
+                <c-print-roles-w-ith-subordinate root-role ={role} onshownotification={showNotification} onrefresh={refreshLwcComponent} oncreaterole ={handleLoading}  role={role}></c-print-roles-w-ith-subordinate>
+            </div>
+        </div>
+    </div>
+</template>

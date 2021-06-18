@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>App to show Lightning View for User Roles</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>Roles Lightning View App</label>
+    <navType>Standard</navType>
+    <tabs>RoleLightningView</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>Roles_Lightning_View_App_UtilityBar</utilityBar>
+</CustomApplication>
