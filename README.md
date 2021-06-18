@@ -8,4 +8,5 @@ The salesforce code repository to provide functionality for the lightning view o
 3. This repository also provide functionality to add child user roles to any role and also to delete roles which do not have any child user roles.
 
 *************************************************************************
-
+Unmanaged Package Installation Url : https://login.salesforce.com/packaging/installPackage.apexp?p0=04t2w000009BbB6
+Managed Package Installation Url : https://login.salesforce.com/packaging/installPackage.apexp?p0=04t2w000009Bb5g 
