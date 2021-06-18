@@ -10,3 +10,5 @@ The salesforce code repository to provide functionality for the lightning view o
 *************************************************************************
 Unmanaged Package Installation Url : https://login.salesforce.com/packaging/installPackage.apexp?p0=04t2w000009BbB6
 Managed Package Installation Url : https://login.salesforce.com/packaging/installPackage.apexp?p0=04t2w000009Bb5g 
+
+_Note : Install this package for System administrator only as there is involvement of setting up things which are dealt by admins only.
